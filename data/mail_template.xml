@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="mail_templates" model="mail.template">
+            <field name="name">Email sách</field>
+            <field name="email_from">${object.email.name |safe}</field>
+            <field name="email_to">quoc.nguyenvan@vti.com.vn</field>
+            <field name="subject">Thông tin mượn sách của ${object.name.name or 'n/a' }</field>
+            <field name="model_id" ref="model_book_borrow"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html">
+                <![CDATA[
+                <p>Hi ${object.name.name}</p>
+                <p>Tôi tên là ${object.name.name} đang mượn quyển sách ${object.name_of_book} vào ngày
+                    ${object.date_borrow_book}
+                </p>
+                 <br/>
+                 ]]>
+            </field>
+        </record>
+    </data>
+</odoo>

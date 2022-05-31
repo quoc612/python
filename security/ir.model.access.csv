@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_book_info_user,access_book_info_user,model_book_info,group_user,1,0,0,0
+access_book_info_manager,access_book_info_manager,model_book_info,group_manager,1,1,1,1
+access_book_borrow_user,access_book_borrow_user,model_book_borrow,group_user,1,1,1,1
+access_book_borrow_manager,access_book_borrow_manager,model_book_borrow,group_manager,1,1,0,1
+access_book_return_user,access_book_return_user,model_book_return,group_user,1,1,1,0
+access_book_return_manager,access_book_return_manager,model_book_return,group_manager,1,1,0,1

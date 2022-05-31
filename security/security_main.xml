@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.module.category" id="category_security_id">
+            <field name="name">Library Manager</field>
+            <field name="sequence">1</field>
+        </record>
+        <record id="group_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="category_security_id"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <record id="group_manager" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="category_id" ref="category_security_id"/>
+        </record>
+
+        <record id="group_user_book_borrow" model="ir.rule">
+            <field name="name">Library User Borrow</field>
+            <field name="model_id" ref="mybook.model_book_borrow"/>
+            <field name="groups" eval="[(4, ref('group_user'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="domain_force">[('name.user_id', '=', user.id), ('state', '!=' ,'confirm')]</field>
+        </record>
+        <record id="group_user_book_return" model="ir.rule">
+            <field name="name">Library User Return</field>
+            <field name="model_id" ref="mybook.model_book_return"/>
+            <field name="groups" eval="[(4, ref('group_user'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_unlink" eval="0"/>
+            <field name="perm_create" eval="0"/>
+            <field name="domain_force">[('name.user_id', '=', user.id) ]</field>
+        </record>
+
+        <record id="group_admin_book_borrow" model="ir.rule">
+            <field name="name">Library Borrow Manager</field>
+            <field name="model_id" ref="model_book_borrow"/>
+            <field name="groups" eval="[(4, ref('group_manager'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="domain_force">[]</field>
+        </record>
+        <record id="group_admin_book_return" model="ir.rule">
+            <field name="name">Library Return Manager</field>
+            <field name="model_id" ref="mybook.model_book_return"/>
+            <field name="groups" eval="[(4, ref('group_manager'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_unlink" eval="0"/>
+            <field name="perm_create" eval="0"/>
+            <field name="domain_force">[]</field>
+        </record>
+
+    </data>
+</odoo>

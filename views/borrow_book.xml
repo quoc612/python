@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="book_borrow_form_view" model="ir.ui.view">
+            <field name="name">book.borrow.form.view</field>
+            <field name="model">book.borrow</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="started_progressbar" string="Submit"
+                                attrs="{'invisible': [('state','!=','draft')]}" groups="mybook.group_user"
+                                type="object" class="oe_highlight"/>
+                        <button name="confirm_progressbar" string="Confirm"
+                                attrs="{'invisible': [('state','!=','confirm')]}" groups="mybook.group_manager"
+                                type="object" class="oe_highlight"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirm,approved"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="book_info_id"/>
+                                <field name="name"/>
+                                <field name="name_of_book"/>
+                            </group>
+                            <group>
+                                <field name="name_of_leader"/>
+                                <field name="date_borrow_book"/>
+                                <field name="is_expried_of_book"/>
+                                <field name="number_of_money"/>
+                                <field name="date_return_expried"/>
+                            </group>
+
+
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="book_borrow_tree_view" model="ir.ui.view">
+            <field name="name">book.borrow.tree.view</field>
+            <field name="model">book.borrow</field>
+            <field name="arch" type="xml">
+                <tree string="Book Borrow" default_order="create_date desc">
+                    <field name="book_info_id"/>
+                    <field name="name"/>
+                    <field name="name_of_book"/>
+                    <field name="name_of_leader"/>
+                    <field name="date_borrow_book"/>
+                    <field name="date_return_expried"/>
+                    <field name="is_expried_of_book"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="book_borrow_kanban_view" model="ir.ui.view">
+            <field name="name">book.borrow.kanban.view</field>
+            <field name="model">book.borrow</field>
+            <field name="priority" eval="1"/>
+            <field name="arch" type="xml">
+                <kanban default_group_by="book_info_id" class="o_kanban_small_column o_opportunity_kanban"
+                        on_create="quick_create" quick_create_view="crm.quick_create_opportunity_form"
+                        archivable="false">
+
+                    <field name="book_info_id"/>
+                    <field name="name"/>
+                    <field name="name_of_book"/>
+                    <field name="name_of_leader"/>
+                    <field name="date_borrow_book"/>
+                    <field name="date_return_expried"/>
+                    <field name="is_expried_of_book"/>
+
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="oe_kanban_details">
+                                    <ul>
+                                        <li>
+                                            Book Info ID :
+                                            <field name="book_info_id"/>
+                                        </li>
+                                        <li>
+                                            Name :
+                                            <field name="name"/>
+                                        </li>
+                                        <li>
+                                            Name Of Book :
+                                            <field name="name_of_book"/>
+                                        </li>
+                                        <li>
+                                            Book Info ID :
+                                            <field name="book_info_id"/>
+                                        </li>
+                                        <li>
+                                            Date Borrow Book :
+                                            <field name="date_borrow_book"/>
+                                        </li>
+                                        <li>
+                                            Date Return Expired :
+                                            <field name="date_return_expried"/>
+                                        </li>
+                                        <li>
+                                            Expired of Book :
+                                            <field name="is_expried_of_book"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <record id="book_borrow_calendar_view" model="ir.ui.view">
+            <field name="name">book.borrow.calendar</field>
+            <field name="model">book.borrow</field>
+            <field name="arch" type="xml">
+                <calendar string="Calendar" date_start="date_borrow_book" color="book_info_id">
+                    <field name="name"/>
+                    <field name="name_of_book"/>
+                </calendar>
+            </field>
+        </record>
+        <record id="action_my_book_borrow" model="ir.actions.act_window">
+            <field name="name">Borrow Book</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">book.borrow</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('book_borrow_tree_view')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('book_borrow_form_view')}),
+                (0, 0, {'view_mode': 'kanban', 'view_id': ref('book_borrow_kanban_view')}),
+                (0, 0, {'view_mode': 'calendar', 'view_id': ref('book_borrow_calendar_view')})]"/>
+        </record>
+
+        <menuitem id="menu_my_book_borrow"
+                  name="Borrow Book"
+                  action="action_my_book_borrow"
+                  sequence="10"
+                  groups="base.group_user"/>
+    </data>
+</odoo>

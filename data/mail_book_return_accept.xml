@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="mail_book_return_accept" model="mail.template">
+            <field name="name">Xác nhận yêu cầu trả sách thành công</field>
+            <field name="email_from">${object.email |safe}</field>
+            <field name="email_to">quoc.nguyenvan2000@gmail.com</field>
+            <field name="subject">Yêu cầu trả sách của ${object.name.name or 'n/a' }</field>
+            <field name="model_id" ref="model_book_return"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html">
+                <![CDATA[
+                <p>Dear ${object.name_of_leader.name}</p>
+                <p>
+                   Bạn đã trả sách thành công
+                </p>
+                 <br/>
+                 ]]>
+            </field>
+        </record>
+    </data>
+</odoo>

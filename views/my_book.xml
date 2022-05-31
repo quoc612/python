@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="book_info_form_view" model="ir.ui.view">
+            <field name="name">book.info.form.view</field>
+            <field name="model">book.info</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name_of_book"/>
+                            <field name="is_expried_of_book"/>
+                            <field name="number_of_money"/>
+
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="book_info_tree_view" model="ir.ui.view">
+            <field name="name">book.info.tree.view</field>
+            <field name="model">book.info</field>
+            <field name="arch" type="xml">
+                <tree string="Book Info" default_order="create_date desc">
+                    <field name="name_of_book"/>
+                    <field name="is_expried_of_book"/>
+                    <field name="number_of_money"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_my_book_info" model="ir.actions.act_window">
+            <field name="name">My Book Info</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">book.info</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('book_info_tree_view')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('book_info_form_view')})]"/>
+        </record>
+
+        <menuitem id="menu_my_book_info"
+                  name="My Book Info"
+                  action="action_my_book_info"
+                  sequence="10"
+                  groups="base.group_user"/>
+    </data>
+</odoo>

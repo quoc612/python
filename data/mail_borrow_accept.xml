@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="mail_borrow_accept" model="mail.template">
+            <field name="name">Email xác nhận mượn sách</field>
+            <field name="email_from">${object.email}</field>
+            <field name="email_to">quoc.nguyenvan2000@gmail.com</field>
+            <field name="subject">Xác nhận thông tin mượn sách của ${object.name.name or 'n/a' }</field>
+            <field name="model_id" ref="model_book_borrow"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html">
+                <![CDATA[
+                <p>Dear ${object.name_of_leader.name}</p>
+                <p>
+                   Quyển sách ${object.name_of_book} đã được mượn thành công
+                </p>
+                 <br/>
+                 ]]>
+            </field>
+        </record>
+    </data>
+</odoo>
